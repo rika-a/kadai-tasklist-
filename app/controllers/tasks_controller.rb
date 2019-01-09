@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
+  
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks if logged_in?
   end
   
   def show
@@ -12,7 +13,7 @@ class TasksController < ApplicationController
   end
   
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
 
     if @task.save
       flash[:success] = 'タスクが作成されました'
@@ -49,6 +50,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-      params.require(:task).permit(:content, :status)
+    params.require(:task).permit(:content, :status)
   end
 end

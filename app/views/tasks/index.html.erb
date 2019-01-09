@@ -1,7 +1,18 @@
-<h1>タスクリスト一覧</h1>
+<% if logged_in? %>
+  <p>ようこそ <%= current_user.name %>さん！</p>
 <ul>
   <% @tasks.each do |task| %>
     <li><%= link_to task.id,task %> :<%= task.status %> &gt; <%= task.content %></li>
   <% end %>
 </ul>
 
+<%= link_to "新規作成", new_task_path %>
+
+<% else %>
+<div class="center jumbotron">
+  <div class="text-center">
+    <h1>タスクリストへようこそ</h1>
+    <%= link_to 'アカウントを登録する', signup_path, class: 'btn btn-lg btn-primary' %>
+  </div>
+</div>
+<% end %>
